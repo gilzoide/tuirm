@@ -1,0 +1,6 @@
+cpp {
+	input = utils.glob '*.cpp',
+	includes = '../include',
+	output = 'main',
+	deps = {libtuirm}
+}

@@ -1,0 +1,5 @@
+return cpp.shared {
+	input = utils.glob '*.cpp',
+	includes = '../include',
+	output = 'tuirm.so'
+}
