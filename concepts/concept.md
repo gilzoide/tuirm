@@ -44,3 +44,17 @@ Input handler will know which Widget is in focus, change focus, and call the
 Callbacks if there are any. Inputs may be ignored by some Widgets, and even
 rethrown for parents to handle.
 
+COMMAND LINE ARGUMENTS
+======================
+Command line arguments are really useful for customization.
+Tuirm will have some common command line arguments for apps, which may be used
+when calling the `App` constructor with `argc` and `argv` as arguments.
+Some options:
+- Log output file (instead of stdout/stderr)
+- Setting app's maximum height and width (instead of initial `LINES` and `COLS`)
+
+CONFIGURATION
+=============
+App configuration (aside from tuirm's one) is really important, most of the
+time. Maybe there'll be some integration with some data serialization file type
+(probably YAML, or JSON).

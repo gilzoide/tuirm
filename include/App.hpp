@@ -22,7 +22,26 @@
  */
 #pragma once
 
+#include <ncurses.h>
+
 namespace tuirm {
-	class App {
-	};
+
+class App {
+public:
+	/**
+	 * Ctor: calls `init`
+	 */
+	App ();
+
+	/**
+	 * Close the application, ending curses windowing
+	 */
+	void close ();
+private:
+	/**
+	 * Initialize the application, starting curses stuff
+	 */
+	void init ();
+};
+
 }

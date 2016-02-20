@@ -2,8 +2,10 @@
 #include "tuirm.hpp"
 
 using namespace std;
+using namespace tuirm;
 
 int main () {
-	cout << "yo" << endl;
+	App app;
+	app.close ();
 	return 0;
 }

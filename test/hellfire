@@ -1,6 +1,12 @@
 cpp {
 	input = utils.glob '*.cpp',
 	includes = '../include',
+	links = 'tuirm',
+	libDirs = '../' .. hell.outdir,
 	output = 'main',
 	deps = {libtuirm}
 }
+
+exclusiveTarget ('run', command {
+	cmd = 'LD_LIBRARY_PATH=' .. hell.outdir .. ' build/main'
+})
