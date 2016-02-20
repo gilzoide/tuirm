@@ -34,14 +34,26 @@ public:
 	App ();
 
 	/**
-	 * Close the application, ending curses windowing
+	 * Run application main loop
+	 *
+	 * This function ends when `App::close` is called
+	 */
+	void run ();
+
+	/**
+	 * Close the application, ending ncurses windowing
 	 */
 	void close ();
 private:
 	/**
 	 * Initialize the application, starting curses stuff
 	 */
-	void init ();
+	void initCurses ();
+
+	/**
+	 * Boolean indicating if main loop should continue running
+	 */
+	bool mainLoop;
 };
 
 }

@@ -2,5 +2,6 @@ return cpp.shared {
 	input = utils.glob '*.cpp',
 	includes = '../include',
 	links = 'ncurses',
+	std = 'c++11',
 	output = 'libtuirm.so'
 }

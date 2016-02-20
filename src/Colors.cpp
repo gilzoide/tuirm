@@ -16,47 +16,33 @@
  *
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
-#include <App.hpp>
-#include <Colors.hpp>
 
-using namespace std;
+#include <Colors.hpp>
+#include <ncurses.h>
 
 namespace tuirm {
 
-App::App () {
-	initCurses ();
-}
-
-
-void App::initCurses () {
-	initscr ();
-	keypad (stdscr, TRUE);
-	cbreak ();
-	noecho ();
-	initCursesColors ();
-}
-
-
-void App::run () {
-	int c = 0;
-
-	mainLoop = true;
-	while (mainLoop) {
-		c = getch ();
-		if (c == 'q') {
-			close ();
-		}
-		else {
-			attron (COLOR_PAIR (BkBl));
-			addstr ("Clicked something. 'q' to quit\n");
-		}
+void initCursesColors () {
+	const int cursesColors[] = {
+		-1,
+		COLOR_BLACK,
+		COLOR_RED,
+		COLOR_GREEN,
+		COLOR_YELLOW,
+		COLOR_BLUE,
+		COLOR_MAGENTA,
+		COLOR_CYAN,
+		COLOR_WHITE
+	};
+	if (start_color () == ERR) {
+		throw "Couldn't initialize colors!";
 	}
-}
-
-
-void App::close () {
-	endwin ();
-	mainLoop = false;
+	assume_default_colors (-1, -1);
+	for (int i = 0; i < COLORS_STEP; i++) {
+		for (int j = 0; j < COLORS_STEP; j++) {
+			init_pair (i * COLORS_STEP + j, cursesColors[i], cursesColors[j]);
+		}	
+	}
 }
 
 }

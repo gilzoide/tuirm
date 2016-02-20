@@ -6,6 +6,7 @@ using namespace tuirm;
 
 int main () {
 	App app;
-	app.close ();
+	app.run ();
+	cout << "ae" << endl;
 	return 0;
 }

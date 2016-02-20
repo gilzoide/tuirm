@@ -16,47 +16,20 @@
  *
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
-#include <App.hpp>
-#include <Colors.hpp>
 
-using namespace std;
+/** @file debug.hpp
+ * Useful debug/error functions/macros
+ */
+#pragma once
 
-namespace tuirm {
+#include <cstdio>
 
-App::App () {
-	initCurses ();
-}
+/// Some error in function 'funcName'
+#define ERROR(funcName, fmt, ...) \
+	fprintf (stderr, "[tuirm::" funcName " @ " __FILE__ ":%d] Error: " \
+			fmt "\n", __LINE__, ##__VA_ARGS__)
 
-
-void App::initCurses () {
-	initscr ();
-	keypad (stdscr, TRUE);
-	cbreak ();
-	noecho ();
-	initCursesColors ();
-}
-
-
-void App::run () {
-	int c = 0;
-
-	mainLoop = true;
-	while (mainLoop) {
-		c = getch ();
-		if (c == 'q') {
-			close ();
-		}
-		else {
-			attron (COLOR_PAIR (BkBl));
-			addstr ("Clicked something. 'q' to quit\n");
-		}
-	}
-}
-
-
-void App::close () {
-	endwin ();
-	mainLoop = false;
-}
-
-}
+#define FATAL(funcName, fmt, ...) \
+	fprintf (stderr, "[tuirm::" funcName " @ " __FILE__ ":%d] Error: " \
+			fmt "\n", __LINE__, ##__VA_ARGS__); \
+	exit (-1)
