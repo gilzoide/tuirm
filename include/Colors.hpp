@@ -17,7 +17,7 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-/** @file Color.hpp
+/** @file Colors.hpp
  * The Color definitions, and curses colors initialization
  */
 #pragma once

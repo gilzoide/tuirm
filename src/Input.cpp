@@ -16,68 +16,17 @@
  *
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
-#include <App.hpp>
-#include <Input.hpp>
-#include <Colors.hpp>
-#include <debug.hpp>
-#include <StdLogger.hpp>
 
-using namespace std;
+#include <Input.hpp>
+
+#include <ncurses.h>
 
 namespace tuirm {
 
-App::App () {
-	Logger::appLogger = new StdLogger ();
-}
-
-
-App::App (int& argc, char **& argv) {
-	Logger::appLogger = new StdLogger ();
-}
-
-
-App::~App () {
-	delete Logger::appLogger;
-}
-
-
-void App::initCurses () {
-	try {
-		initscr ();
-		keypad (stdscr, TRUE);
-		cbreak ();
-		noecho ();
-		initCursesColors ();
+namespace Input {
+	int getInput () {
+		return getch ();
 	}
-	catch (const char *err) {
-		close ();
-		APIError ("App::initCurses", "%s", err);
-	}
-}
-
-
-void App::run () {
-	mainLoop = true;
-
-	initCurses ();
-
-	int c = 0;
-	while (mainLoop) {
-		c = Input::getInput ();
-		if (c == 'q') {
-			close ();
-		}
-		else {
-			attron (COLOR_PAIR (BkBl));
-			addstr ("Clicked something. 'q' to quit\n");
-		}
-	}
-}
-
-
-void App::close () {
-	endwin ();
-	mainLoop = false;
 }
 
 }

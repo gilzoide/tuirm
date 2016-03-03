@@ -3,6 +3,7 @@ cpp {
 	includes = '../include',
 	links = 'tuirm',
 	libDirs = '../' .. hell.outdir,
+	std = 'c++11',
 	output = 'main',
 	deps = {libtuirm}
 }

@@ -4,9 +4,9 @@
 using namespace std;
 using namespace tuirm;
 
-int main () {
-	App app;
+int main (int argc, char **argv) {
+	App app (argc, argv);
 	app.run ();
-	cout << "ae" << endl;
+	Logger::getAppLogger ()->log ("yo!");
 	return 0;
 }

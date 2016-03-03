@@ -23,3 +23,7 @@
 #pragma once
 
 #include <App.hpp>
+#include <Panel.hpp>
+#include <Widget.hpp>
+#include <Logger.hpp>
+#include <Colors.hpp>

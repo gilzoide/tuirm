@@ -17,64 +17,30 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-/** @file App.hpp
- * The App definition
+/** @file CerrLogger.hpp
+ * Default Logger before app Logger is set: writes to _stderr_
  */
 #pragma once
 
-#include <Widget.hpp>
+#include <Logger.hpp>
 
-#include <ncurses.h>
+#include <iostream>
+
+using namespace std;
 
 namespace tuirm {
 
-/**
- * Tuirm's App class
- *
- * @warning Everything in _tuirm_ is based around having one and only App
- *  object, so please don't
- */
-class App {
-public:
-	/**
-	 * Default Ctor
-	 */
-	App ();
-	/**
-	 * Ctor using command line arguments
-	 *
-	 * @note we use references to the arguments, so that we can extract tuirm's
-	 *  command line options
-	 */
-	App (int& argc, char **& argv);
-
-	/**
-	 * Dtor: closes app logger
-	 */
-	~App ();
-
-	/**
-	 * Run application main loop
-	 *
-	 * This function ends when @ref App::close is called
-	 */
-	void run ();
-
-	/**
-	 * Close the application, ending ncurses windowing
-	 */
-	void close ();
-
+class StdLogger : public Logger {
 protected:
 	/**
-	 * Initialize the application, starting curses stuff
+	 * Writes message to _stdout_ using `std::cout`
 	 */
-	void initCurses ();
+	void writeLog (const string& message) override;
 
 	/**
-	 * Boolean indicating if main loop should continue running
+	 * Writes message to _stderr_ using `std::cerr`
 	 */
-	bool mainLoop;
+	void writeError (const string& message) override;
 };
 
 }

@@ -25,11 +25,11 @@
 #include <cstdio>
 
 /// Some error in function 'funcName'
-#define ERROR(funcName, fmt, ...) \
+#define APIError(funcName, fmt, ...) \
 	fprintf (stderr, "[tuirm::" funcName " @ " __FILE__ ":%d] Error: " \
 			fmt "\n", __LINE__, ##__VA_ARGS__)
 
-#define FATAL(funcName, fmt, ...) \
+#define APIFatal(funcName, fmt, ...) \
 	fprintf (stderr, "[tuirm::" funcName " @ " __FILE__ ":%d] Error: " \
 			fmt "\n", __LINE__, ##__VA_ARGS__); \
 	exit (-1)

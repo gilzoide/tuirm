@@ -17,33 +17,7 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-#include <Colors.hpp>
-
-#include <ncurses.h>
-
-namespace tuirm {
-
-void initCursesColors () {
-	const int cursesColors[] = {
-		-1,
-		COLOR_BLACK,
-		COLOR_RED,
-		COLOR_GREEN,
-		COLOR_YELLOW,
-		COLOR_BLUE,
-		COLOR_MAGENTA,
-		COLOR_CYAN,
-		COLOR_WHITE
-	};
-	if (start_color () == ERR) {
-		throw "Couldn't initialize curses colors!";
-	}
-	assume_default_colors (-1, -1);
-	for (int i = 0; i < COLORS_STEP; i++) {
-		for (int j = 0; j < COLORS_STEP; j++) {
-			init_pair (i * COLORS_STEP + j, cursesColors[i], cursesColors[j]);
-		}	
-	}
-}
-
-}
+/** @file FileLogger.hpp
+ * A @ref tuirm::Logger who writes to a file
+ */
+#pragma once

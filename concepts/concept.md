@@ -22,8 +22,8 @@ USING
 
 CLASSES
 =======
-Tuirm classes (Widgets not listed, they will be severelly added/removed along
-the way).
+Tuirm main classes (Widgets not listed, they will be severelly added/removed
+along the way, nor are auxiliary classes).
 
 Class  | What for
 ------ | --------
@@ -31,6 +31,7 @@ App    | The application object. May or may not use multithreads
 Panel  | The panels. Window abstractions, may have child Panels and Widgets. Maybe will be movable, and resize it's children automatically
 Widget | You know that these are for. Various callbacks may be handled, C++11 function style
 Input  | The input handler. Read more about it in the next chapter ;]
+Logger | A logger for debug/error info, sending it to a file, ignoring it, or even opening a new panel in app (polymorphism)
 
 INPUT
 =====
@@ -44,17 +45,32 @@ Input handler will know which Widget is in focus, change focus, and call the
 Callbacks if there are any. Inputs may be ignored by some Widgets, and even
 rethrown for parents to handle.
 
+There will probably be an event queue, and a thread separated from main to
+process it, so we don't lose responsivity.
+
 COMMAND LINE ARGUMENTS
 ======================
 Command line arguments are really useful for customization.
 Tuirm will have some common command line arguments for apps, which may be used
 when calling the `App` constructor with `argc` and `argv` as arguments.
 Some options:
-- Log output file (instead of stdout/stderr)
-- Setting app's maximum height and width (instead of initial `LINES` and `COLS`)
+- Log output file, or in app alerts
+- Setting app's maximum height and width (instead of initial `LINES` and `COLS`),
+  useful for testing
 
 CONFIGURATION
 =============
 App configuration (aside from tuirm's one) is really important, most of the
 time. Maybe there'll be some integration with some data serialization file type
 (probably YAML, or JSON).
+
+APP CONSTRUCTION
+================
+Building an interface with panels, widgets and this stuff is somewhat
+complicated and demand hard work.
+Thinking on that, _tuirm_ gives us programmers an easier way: a DOM like
+structure for building widget trees, and with a builder using external files
+(or strings).
+Widgets may have IDs, stored in a `std::map`, so that we can
+query the app for a specific widget. Wigets without IDs won't be in the `map`,
+but still are tied up in the tree, so it all works fine.

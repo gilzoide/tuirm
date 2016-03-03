@@ -2,9 +2,12 @@
 *~
 *.swp
 # build stuff
-build/*
+build/
 # scons stuff
 *scons*
 # ctags/cscope
 cscope*
 ctags
+# doxygen output
+man/
+html/
