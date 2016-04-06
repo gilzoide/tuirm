@@ -73,4 +73,4 @@ structure for building widget trees, and with a builder using external files
 (or strings).
 Widgets may have IDs, stored in a `std::map`, so that we can
 query the app for a specific widget. Wigets without IDs won't be in the `map`,
-but still are tied up in the tree, so it all works fine.
+but will still be tied up in the tree, so it all works fine.

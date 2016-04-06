@@ -67,6 +67,13 @@ public:
 	void error (const string& message, int minVerbosity = 0);
 
 	/**
+	 * SETTER for the @ref verbosity member
+	 *
+	 * @param verbosity New verbosity value
+	 */
+	void setVerbosity (int verbosity);
+
+	/**
 	 * Return App's default Logger
 	 *
 	 * @return appLogger

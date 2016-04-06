@@ -17,21 +17,36 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-/** @file debug.hpp
- * Useful debug/error functions/macros
- */
-#pragma once
+#include "FileLogger.hpp"
 
-#include "Exception.hpp"
+#include <chrono>
+#include <ctime>
+#include <iomanip>
 
-#include <sstream>
+using namespace chrono;
 
-/// Throw an instance of tuirm::Exception, to tell us where some problem ocurred
-#define TUIRM_API_EXCEPTION(funcName, what) \
-	[&] () -> Exception { \
-		ostringstream os; \
-		os << "[tuirm::" << funcName << " @ " << __FILE__ << ':' << __LINE__ \
-				<< "] " << what; \
-		return move (Exception (move (os.str ()))); \
-	} ()
+namespace tuirm {
 
+FileLogger::FileLogger (const string& fileName) {
+	file.open (fileName, ios::out | ios::app);
+	// append current time on file
+	auto now = system_clock::to_time_t (system_clock::now ());
+	file << put_time (localtime (&now), "%c") << endl;
+}
+
+
+FileLogger::~FileLogger () {
+	file.close ();
+}
+
+
+void FileLogger::writeLog (const string& message) {
+	file << "LOG: " << message << endl;
+}
+
+
+void FileLogger::writeError (const string& message) {
+	file << "ERROR: " << message << endl;
+}
+
+}

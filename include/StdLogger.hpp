@@ -17,8 +17,8 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-/** @file CerrLogger.hpp
- * Default Logger before app Logger is set: writes to _stderr_
+/** @file StdLogger.hpp
+ * _stdout_ and _stderr_ Logger
  */
 #pragma once
 
@@ -30,6 +30,9 @@ using namespace std;
 
 namespace tuirm {
 
+/**
+ * Logger that writes to _stdout_ and _stderr_
+ */
 class StdLogger : public Logger {
 protected:
 	/**

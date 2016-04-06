@@ -18,6 +18,48 @@
  */
 
 /** @file FileLogger.hpp
- * A @ref tuirm::Logger who writes to a file
+ * Logger that writes to a file
  */
 #pragma once
+
+#include <Logger.hpp>
+
+#include <fstream>
+
+using namespace std;
+
+namespace tuirm {
+
+/**
+ * Logger that writes to a file
+ */
+class FileLogger : public Logger {
+public:
+	/**
+	 * Ctor: initializes the file
+	 */
+	FileLogger (const string& fileName);
+
+	/**
+	 * Dtor: closes the file
+	 */
+	~FileLogger ();
+
+protected:
+	/**
+	 * Writes message to the file, prefixed with "LOG: "
+	 */
+	void writeLog (const string& message) override;
+
+	/**
+	 * Writes message to the file, prefixed with "ERROR: "
+	 */
+	void writeError (const string& message) override;
+
+	/**
+	 * Output file
+	 */
+	ofstream file;
+};
+
+}

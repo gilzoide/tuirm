@@ -22,9 +22,11 @@
  */
 #pragma once
 
-#include <Widget.hpp>
+#include "Widget.hpp"
+#include "Exception.hpp"
 
 #include <ncurses.h>
+#include <lap/lap.hpp>
 
 namespace tuirm {
 
@@ -32,7 +34,7 @@ namespace tuirm {
  * Tuirm's App class
  *
  * @warning Everything in _tuirm_ is based around having one and only App
- *  object, so please don't
+ *  object, so please don't go crazy thinking having 2 will work =P
  */
 class App {
 public:
@@ -45,8 +47,10 @@ public:
 	 *
 	 * @note we use references to the arguments, so that we can extract tuirm's
 	 *  command line options
+	 *
+	 * @throw lap::Exception with command line options errors
 	 */
-	App (int& argc, char **& argv);
+	App (int& argc, char **& argv) throw (lap::Exception);
 
 	/**
 	 * Dtor: closes app logger
@@ -56,9 +60,25 @@ public:
 	/**
 	 * Run application main loop
 	 *
-	 * This function ends when @ref App::close is called
+	 * This function ends when @ref close is called
 	 */
 	void run ();
+
+	/**
+	 * Pause the application, closing ncurses, but not ending the main loop
+	 *
+	 * @sa resume
+	 */
+	void pause ();
+
+	/**
+	 * Resume the application, restoring ncurses
+	 *
+	 * @note Calling this without pausing the App doesn't do anything
+	 *
+	 * @sa pause
+	 */
+	void resume ();
 
 	/**
 	 * Close the application, ending ncurses windowing

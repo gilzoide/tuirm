@@ -17,21 +17,18 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-/** @file debug.hpp
- * Useful debug/error functions/macros
- */
-#pragma once
+#include <Exception.hpp>
 
-#include "Exception.hpp"
+namespace tuirm {
 
-#include <sstream>
+Exception::Exception (const string& what_arg) : what_arg (what_arg) {}
 
-/// Throw an instance of tuirm::Exception, to tell us where some problem ocurred
-#define TUIRM_API_EXCEPTION(funcName, what) \
-	[&] () -> Exception { \
-		ostringstream os; \
-		os << "[tuirm::" << funcName << " @ " << __FILE__ << ':' << __LINE__ \
-				<< "] " << what; \
-		return move (Exception (move (os.str ()))); \
-	} ()
 
+Exception::Exception (const char *what_arg) : what_arg (what_arg) {}
+
+
+const char *Exception::what () const noexcept {
+	return what_arg.c_str ();
+}
+
+}

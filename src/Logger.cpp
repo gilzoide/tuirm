@@ -38,6 +38,11 @@ void Logger::error (const string& message, int minVerbosity) {
 }
 
 
+void Logger::setVerbosity (int verbosity) {
+	this->verbosity = verbosity;
+}
+
+
 Logger *Logger::getAppLogger () {
 	return appLogger;
 }

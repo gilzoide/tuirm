@@ -17,21 +17,46 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-/** @file debug.hpp
- * Useful debug/error functions/macros
+/** @file Exception.hpp
+ * Tuirm's exceptions
  */
 #pragma once
 
-#include "Exception.hpp"
+#include <string>
+#include <exception>
 
-#include <sstream>
+using namespace std;
 
-/// Throw an instance of tuirm::Exception, to tell us where some problem ocurred
-#define TUIRM_API_EXCEPTION(funcName, what) \
-	[&] () -> Exception { \
-		ostringstream os; \
-		os << "[tuirm::" << funcName << " @ " << __FILE__ << ':' << __LINE__ \
-				<< "] " << what; \
-		return move (Exception (move (os.str ()))); \
-	} ()
+namespace tuirm {
 
+/**
+ * Tuirm's API exceptions
+ */
+class Exception : public exception {
+public:
+	/**
+	 * Ctor
+	 *
+	 * @param what_arg Explanatory string
+	 */
+	Exception (const string& what_arg);
+	/**
+	 * Ctor overload with C strings
+	 *
+	 * @param what_arg Explanatory string
+	 */
+	Exception (const char *what_arg);
+
+	/**
+	 * Returns the explanatory string
+	 *
+	 * @return Explanatory string
+	 */
+	const char *what () const noexcept override;
+
+private:
+	/// The explanatory string
+	string what_arg;
+};
+
+}
