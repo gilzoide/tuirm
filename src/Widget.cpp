@@ -17,29 +17,10 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-#include <Logger.hpp>
+#include "Widget.hpp"
 
 namespace tuirm {
 
-Logger::~Logger () {}
 
-
-void Logger::log (const string& message, int minVerbosity) {
-	if (minVerbosity <= this->verbosity) {
-		writeLog (message);
-	}
-}
-
-
-void Logger::error (const string& message, int minVerbosity) {
-	if (minVerbosity <= this->verbosity) {
-		writeError (message);
-	}
-}
-
-
-void Logger::setVerbosity (int verbosity) {
-	this->verbosity = verbosity;
-}
 
 }

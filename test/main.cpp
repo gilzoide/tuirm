@@ -5,10 +5,16 @@ using namespace std;
 using namespace tuirm;
 
 int main (int argc, char **argv) {
-	App app (argc, argv);
-	app.run ();
-	Logger::getAppLogger ()->log ("yo!");
-	Logger::getAppLogger ()->log ("yo2");
-	Logger::getAppLogger ()->log ("yo3");
+	try {
+		App app (argc, argv);
+		app.setRoot (Builder::build ("concepts/simpleApp.yaml"));
+		app.run ();
+		app.getLogger ()->log ("yo!");
+		app.getLogger ()->log ("yo2");
+		app.getLogger ()->log ("yo3");
+	}
+	catch (exception& ex) {
+		cerr << "Erro do teste: " << ex.what () << endl;
+	}
 	return 0;
 }

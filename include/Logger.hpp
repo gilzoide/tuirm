@@ -23,8 +23,6 @@
  */
 #pragma once
 
-#include <App.hpp>
-
 #include <string>
 
 using namespace std;
@@ -37,11 +35,6 @@ namespace tuirm {
  * Children __must__ implement the @ref writeLog and @ref writeError functions
  */
 class Logger {
-	/**
-	 * App is a friend, so that it can create/delete it's default Logger
-	 * @sa appLogger
-	 */
-	friend class App;
 public:
 	/**
 	 * Log something
@@ -74,13 +67,6 @@ public:
 	void setVerbosity (int verbosity);
 
 	/**
-	 * Return App's default Logger
-	 *
-	 * @return appLogger
-	 */
-	static Logger *getAppLogger ();
-
-	/**
 	 * Dtor, virtual so that this class can really be a virtual class
 	 */
 	virtual ~Logger ();
@@ -111,12 +97,6 @@ protected:
 	 * Verbosity determines which messages are to be logged
 	 */
 	int verbosity {0};
-
-private:
-	/**
-	 * App's default Logger
-	 */
-	static Logger *appLogger;
 };
 
 }

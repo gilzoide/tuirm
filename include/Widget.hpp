@@ -22,11 +22,25 @@
  */
 #pragma once
 
+#include <ncurses.h>
+
 namespace tuirm {
 
+/**
+ * UI widgets, a rectangle that shows something, and react to Input
+ */
 class Widget {
 public:
 protected:
+	/**
+	 * Curses window
+	 */
+	WINDOW *win;
+
+	/// Widget's height
+	unsigned int height;
+	/// Widget's width
+	unsigned int width;
 };
 
 }

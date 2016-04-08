@@ -17,29 +17,30 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-#include <Logger.hpp>
+#include "Builder.hpp"
+#include "debug.hpp"
+
+#include <iostream>
+#include <yaml-cpp/yaml.h>
 
 namespace tuirm {
 
-Logger::~Logger () {}
+Widget *Builder::build (const string& file) {
+	auto tree = YAML::LoadFile (file);
 
-
-void Logger::log (const string& message, int minVerbosity) {
-	if (minVerbosity <= this->verbosity) {
-		writeLog (message);
+	// assert root key
+	if (tree["root"]) {
+		tree = tree["root"];
 	}
-}
-
-
-void Logger::error (const string& message, int minVerbosity) {
-	if (minVerbosity <= this->verbosity) {
-		writeError (message);
+	else {
+		throw TUIRM_API_EXCEPTION ("Builder::build", "YAML file don't have a 'root' key");
 	}
-}
 
+	for (auto node : tree) {
+		cout << "- " << node << endl;
+	}
 
-void Logger::setVerbosity (int verbosity) {
-	this->verbosity = verbosity;
+	return new Widget;
 }
 
 }

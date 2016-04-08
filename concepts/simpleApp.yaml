@@ -1,0 +1,14 @@
+---
+# rola usar referências
+botao : &button
+    type : button
+    text : botao
+
+root :
+- *button
+- *button
+- type : button
+  text : Clica vai ^^
+  id : testeButton
+- Oie =P
+...

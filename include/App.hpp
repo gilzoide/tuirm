@@ -22,6 +22,7 @@
  */
 #pragma once
 
+#include "Logger.hpp"
 #include "Widget.hpp"
 #include "Exception.hpp"
 
@@ -56,6 +57,22 @@ public:
 	 * Dtor: closes app logger
 	 */
 	~App ();
+
+	/**
+	 * GETTER for application logger
+	 */
+	Logger *getLogger ();
+
+	/**
+	 * SETTER for the root widget
+	 *
+	 * @warning This only overrides the stored pointer, so if you change an
+	 *  existing one, you must take care of freeing it. App only frees the
+	 *  stored pointer
+	 *
+	 * @return Old Widget pointer
+	 */
+	Widget *setRoot (Widget *newRoot);
 
 	/**
 	 * Run application main loop
@@ -95,6 +112,16 @@ protected:
 	 * Boolean indicating if main loop should continue running
 	 */
 	bool mainLoop;
+
+	/**
+	 * Application's logger
+	 */
+	Logger *logger {nullptr};
+
+	/**
+	 * Root Widget: a Panel
+	 */
+	Widget *root {nullptr};
 };
 
 }

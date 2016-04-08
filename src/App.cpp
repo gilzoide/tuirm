@@ -28,16 +28,16 @@ using namespace std;
 namespace tuirm {
 
 App::App () {
-	Logger::appLogger = new StdLogger ();
+	logger = new StdLogger ();
 }
 
 
 App::App (int& argc, char **& argv) throw (lap::Exception) {
-	lap::ArgParser args;
 	int wantedVerbosity = 0;
-	// App Logger reference, for accessing it on the lambdas
-	auto & appLogger = Logger::appLogger;
+	// reference to App::logger, for accesing in the lambdas
+	auto & logger = this->logger;
 
+	lap::ArgParser args;
 	// possible tuirm's command line options
 	args.registerOpt ("-help", "tuirm command line options help", [&args] {
 				args.showHelp ("Tuirm", "bora lá, moçada!");
@@ -45,8 +45,8 @@ App::App (int& argc, char **& argv) throw (lap::Exception) {
 				return false;
 			});
 	args.registerOpt ("-log", "redirect app logs to a file", 1, {"FILE"},
-			[&appLogger] (lap::argVector v) {
-				appLogger = new FileLogger (v[0]);
+			[&logger] (lap::argVector v) {
+				logger = new FileLogger (v[0]);
 				return true;
 			});
 	// app logger verbosity
@@ -63,17 +63,18 @@ App::App (int& argc, char **& argv) throw (lap::Exception) {
 	args.parseAndRemove (argc, argv);
 
 	// user didn't choose logger type, so create a standard one
-	if (!appLogger) {
-		appLogger = new StdLogger ();
+	if (!logger) {
+		logger = new StdLogger ();
 	}
 
 	// set App Logger verbosity, after it's been decided
-	appLogger->setVerbosity (wantedVerbosity);
+	logger->setVerbosity (wantedVerbosity);
 }
 
 
 App::~App () {
-	delete Logger::appLogger;
+	delete logger;
+	delete root;
 }
 
 
@@ -92,7 +93,23 @@ void App::initCurses () {
 }
 
 
+Logger *App::getLogger () {
+	return logger;
+}
+
+
+Widget *App::setRoot (Widget *newRoot) {
+	auto old = root;
+	root = newRoot;
+	return old;
+}
+
+
 void App::run () {
+	// if there's no root, we can't run at all dude
+	if (!root) {
+		throw TUIRM_API_EXCEPTION ("App::run", "Can't run App without Widgets!");
+	}
 	mainLoop = true;
 
 	initCurses ();

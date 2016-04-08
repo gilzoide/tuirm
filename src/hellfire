@@ -2,7 +2,7 @@ return cpp.shared {
 	input = utils.glob '*.cpp',
 	includes = '../include',
 	flags = '&-g',
-	links = {'ncurses', 'lap'},
+	links = {'ncurses', 'lap', 'yaml-cpp'},
 	std = 'c++11',
 	output = 'libtuirm.so'
 }

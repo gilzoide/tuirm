@@ -17,29 +17,34 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-#include <Logger.hpp>
+/** @file Builder.hpp
+ * Tuirm Widget builder, using [YAML](http://www.yaml.org) files
+ */
+#pragma once
+
+#include "Widget.hpp"
+
+#include <string>
+
+using namespace std;
 
 namespace tuirm {
 
-Logger::~Logger () {}
-
-
-void Logger::log (const string& message, int minVerbosity) {
-	if (minVerbosity <= this->verbosity) {
-		writeLog (message);
-	}
-}
-
-
-void Logger::error (const string& message, int minVerbosity) {
-	if (minVerbosity <= this->verbosity) {
-		writeError (message);
-	}
-}
-
-
-void Logger::setVerbosity (int verbosity) {
-	this->verbosity = verbosity;
+namespace Builder {
+	/**
+	 * Build a Widget tree from a YAML file
+	 *
+	 * To build a tuirm app with yaml, there must be a 'root' key, with value
+	 *  as the sequence of widget entries. Note that this is useful if you want
+	 *  to use references to common widgets
+	 *
+	 * @param file YAML file name
+	 *
+	 * @return Built Widget tree
+	 *
+	 * @throw exception when something went wrong
+	 */
+	Widget *build (const string& file);
 }
 
 }
