@@ -25,7 +25,6 @@
 #include "Builder.hpp"
 #include "Widget.hpp"
 
-#include <string>
 #include <yaml-cpp/yaml.h>
 
 using namespace std;
@@ -37,6 +36,8 @@ namespace tuirm {
  *
  * @note For YAML, there __must__ be a 'root' key, that holds a sequence of
  * widgets to be created.
+ * 
+ * @note Sub widgets (children) should be placed in a 'sub' key
  */
 class YAMLBuilder : Builder {
 public:
@@ -76,6 +77,12 @@ private:
 
 	/**
 	 * Recursive funtion that builds a Widget from a Node
+	 *
+	 * @param node A constructed YAMLNode
+	 *
+	 * @return Built Widget
+	 *
+	 * @throw tuirm::Exception if something went wrong
 	 */
 	Widget *buildNode (YAML::Node& node);
 };

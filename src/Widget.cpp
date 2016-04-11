@@ -20,6 +20,8 @@
 #include "Widget.hpp"
 #include "debug.hpp"
 
+#include <algorithm>
+
 namespace tuirm {
 
 // uses '1, 1' because curses windows gives error when creating with '0, 0'
@@ -43,6 +45,32 @@ Widget::~Widget () {
 	for (auto & child : children) {
 		delete child;
 	}
+}
+
+
+void Widget::resizeTo (unsigned int newWidth, unsigned int newHeight) {
+	width = max (1, (int) newWidth);
+	height = max (1, (int) newHeight);
+	// resize curses window
+	wresize (win, height, width);
+}
+
+
+void Widget::resizeBy (int deltaWidth, int deltaHeight) {
+	width = max (1, (int) width + deltaWidth);
+	height = max (1, (int) height + deltaHeight);
+	// resize curses window
+	wresize (win, height, width);
+}
+
+
+unsigned int Widget::getWidth () {
+	return width;
+}
+
+
+unsigned int Widget::getHeight () {
+	return height;
 }
 
 }

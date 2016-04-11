@@ -52,6 +52,19 @@ Widget *YAMLBuilder::build (YAML::Node& tree) {
 
 
 Widget *YAMLBuilder::buildNode (YAML::Node& node) {
+	switch (node.Type ()) {
+		// Map: a Widget, which type must be known by the YAMLBuilder
+		case YAML::NodeType::Map :
+			break;
+
+		// Scalar: a text node. Builds a label
+		case YAML::NodeType::Scalar :
+			break;
+
+		default :
+			throw TUIRM_API_EXCEPTION ("YAMLBuilder::buildNode",
+					"Unknown YAML node type. Should be Map or Scalar");
+	}
 	return new Widget;
 }
 

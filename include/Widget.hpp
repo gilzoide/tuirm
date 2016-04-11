@@ -58,12 +58,43 @@ public:
 	virtual ~Widget ();
 
 	/**
+	 * GETTER for width
+	 */
+	unsigned int getWidth ();
+	/**
+	 * GETTER for height
+	 */
+	unsigned int getHeight ();
+
+	/**
+	 * Resize a Widget to absolute size 'newWidth, newHeight'
+	 *
+	 * This method resizes Widgets to a minimum '1, 1' size
+	 *
+	 * @param newWidth The new total width
+	 * @param newHeight The new total height
+	 */
+	void resizeTo (unsigned int newWidth, unsigned int newHeight);
+	/**
+	 * Resize a Widget to absolute size:
+	 *  'oldWidth + deltaWidth, oldHeight + deltaHeight'
+	 *
+	 * To shrink the Widget, use negative deltas.
+	 * This method shrinks Widgets to a minimum '1, 1' size
+	 *
+	 * @param deltaWidth Width increment
+	 * @param deltaHeight Height increment
+	 */
+	void resizeBy (int deltaWidth, int deltaHeight);
+
+	/**
 	 * Add a child Widget
 	 *
 	 * @note This method doesn't check for nullptr, be sure to pass a valid
 	 *  object
 	 */
 	void addChild (Widget *child);
+
 protected:
 	/**
 	 * Curses window

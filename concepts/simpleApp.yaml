@@ -1,14 +1,26 @@
----
 # rola usar referências
 botao : &button
     type : button
     text : botao
 
+# Root, a raiz da aplicação (ou de algum Widget, que pode ser construído por outro YAML)
 root :
-- *button
-- *button
-- type : button
-  text : Clica vai ^^
-  id : testeButton
-- Oie =P
-...
+  width : 80
+  height : 24
+  sub :
+  - *button
+  - *button
+  # um Widget construído em outro arquivo yaml
+  - type : yaml
+    file : algumWidget.yaml
+  # um botão
+  - type : button
+    text : Clica vai ^^
+    id : testeButton
+    inner :
+      # sub Widgets, ou Widgets filhos
+      - type : caption
+        text : que dizer desse trem?
+      - type : button
+        text : adoroBotoes xP
+  - Oie =P # um nó só texto
