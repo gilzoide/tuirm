@@ -23,8 +23,7 @@
 #pragma once
 
 #include "App.hpp"
-#include "Panel.hpp"
 #include "Widget.hpp"
-#include "Builder.hpp"
+#include "YAMLBuilder.hpp"
 #include "Logger.hpp"
 #include "Colors.hpp"

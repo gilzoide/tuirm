@@ -17,48 +17,67 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-/** @file Builder.hpp
- * Tuirm Widget Builder, from a string or file
+/** @file YAMLBuilder.hpp
+ * Tuirm Widget Builder, from a YAML string or file
  */
 #pragma once
 
+#include "Builder.hpp"
 #include "Widget.hpp"
 
 #include <string>
+#include <yaml-cpp/yaml.h>
 
 using namespace std;
 
 namespace tuirm {
 
 /**
- * Widget Builder, from a string or file
+ * Widget Builder from a YAML string or file
  *
- * This is a pure virtual class, that any Widget Builder should extend.
+ * @note For YAML, there __must__ be a 'root' key, that holds a sequence of
+ * widgets to be created.
  */
-class Builder {
+class YAMLBuilder : Builder {
 public:
 	/**
-	 * Build a Widget tree from a file
+	 * Build a Widget tree from a YAML file
 	 *
-	 * @param file File name
+	 * @param file YAML file name
 	 *
 	 * @return Built Widget tree
+	 *
+	 * @throw tuirm::Exception if 'root' key wasn't found
 	 */
-	virtual Widget *loadFile (const string& file) = 0;
+	Widget *loadFile (const string& file) override;
 
 	/**
-	 * Build a Widget directly from a string
+	 * Build a Widget directly from a YAML string
 	 *
 	 * @param input Input string
 	 *
 	 * @return Built Widget tree
+	 *
+	 * @throw tuirm::Exception if 'root' key wasn't found
 	 */
-	virtual Widget *loadString (const string& input) = 0;
+	Widget *loadString (const string& input) override;
+
+private:
+	/**
+	 * The real build function, abstracting if file or string
+	 *
+	 * @param node A constructed YAMLNode
+	 *
+	 * @return Built Widget tree
+	 *
+	 * @throw tuirm::Exception if 'root' key wasn't found
+	 */
+	Widget *build (YAML::Node& tree);
 
 	/**
-	 * Dtor
+	 * Recursive funtion that builds a Widget from a Node
 	 */
-	virtual ~Builder () {};
+	Widget *buildNode (YAML::Node& node);
 };
 
 }

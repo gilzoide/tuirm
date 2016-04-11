@@ -18,9 +18,31 @@
  */
 
 #include "Widget.hpp"
+#include "debug.hpp"
 
 namespace tuirm {
 
+// uses '1, 1' because curses windows gives error when creating with '0, 0'
+Widget::Widget () : Widget (1, 1) {}
 
+
+Widget::Widget (unsigned int width, unsigned int height) throw (tuirm::Exception)
+	: width (width), height (height) {
+	// Note here that ncurses uses "Y, X" on every function, and tuirm will use
+	// "X, Y" as everyone else does =P
+	win = newpad (height, width);
+	if (!win) {
+		throw TUIRM_API_EXCEPTION ("Widget::Widget",
+				"Couldn't create curses window: ENOMEM");
+	}
+}
+
+
+Widget::~Widget () {
+	delwin (win);
+	for (auto & child : children) {
+		delete child;
+	}
+}
 
 }

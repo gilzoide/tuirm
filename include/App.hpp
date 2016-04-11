@@ -41,6 +41,8 @@ class App {
 public:
 	/**
 	 * Default Ctor
+	 *
+	 * Initializes curses
 	 */
 	App ();
 	/**
@@ -51,7 +53,7 @@ public:
 	 *
 	 * @throw lap::Exception with command line options errors
 	 */
-	App (int& argc, char **& argv) throw (lap::Exception);
+	App (int& argc, char **& argv) throw (tuirm::Exception, lap::Exception);
 
 	/**
 	 * Dtor: closes app logger

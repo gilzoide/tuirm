@@ -2,7 +2,7 @@ cpp {
 	input = utils.glob '*.cpp',
 	includes = '../include',
 	flags = '&-g',
-	links = 'tuirm',
+	links = {'tuirm', 'curses'},
 	libDirs = '../' .. hell.outdir,
 	std = 'c++11',
 	output = 'main',
@@ -10,6 +10,6 @@ cpp {
 }
 
 exclusiveTarget ('run', command {
-	command = 'LD_LIBRARY_PATH=' .. hell.outdir .. ' build/main',
+	command = 'env LD_LIBRARY_PATH=' .. hell.outdir .. ' build/main',
 	args = arg
 })

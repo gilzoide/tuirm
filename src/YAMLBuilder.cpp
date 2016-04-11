@@ -17,29 +17,41 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-#include "Builder.hpp"
+#include "YAMLBuilder.hpp"
 #include "debug.hpp"
-
-#include <iostream>
-#include <yaml-cpp/yaml.h>
 
 namespace tuirm {
 
-Widget *Builder::build (const string& file) {
-	auto tree = YAML::LoadFile (file);
 
+Widget *YAMLBuilder::loadString (const string& input) {
+	auto node = YAML::Load (input);
+	return build (node);
+}
+
+
+Widget *YAMLBuilder::loadFile (const string& file) {
+	auto node = YAML::LoadFile (file);
+	return build (node);
+}
+
+
+Widget *YAMLBuilder::build (YAML::Node& tree) {
 	// assert root key
-	if (tree["root"]) {
-		tree = tree["root"];
+	auto root = tree["root"];
+	if (root) {
+		//auto root = tree["root"];
+
+		// start building the tree, recursively
+		return buildNode (root);
 	}
 	else {
-		throw TUIRM_API_EXCEPTION ("Builder::build", "YAML file don't have a 'root' key");
+		throw TUIRM_API_EXCEPTION ("YAMLBuilder::build",
+				"YAML file doesn't have a 'root' key");
 	}
+}
 
-	for (auto node : tree) {
-		cout << "- " << node << endl;
-	}
 
+Widget *YAMLBuilder::buildNode (YAML::Node& node) {
 	return new Widget;
 }
 

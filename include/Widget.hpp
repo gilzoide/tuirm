@@ -22,7 +22,12 @@
  */
 #pragma once
 
+#include "Exception.hpp"
+
 #include <ncurses.h>
+#include <vector>
+
+using namespace std;
 
 namespace tuirm {
 
@@ -31,16 +36,47 @@ namespace tuirm {
  */
 class Widget {
 public:
+	/**
+	 * Ctor without window size
+	 */
+	Widget ();
+	/**
+	 * Ctor: with size
+	 *
+	 * Curses Window (pad) is created, sized 'width x height'
+	 *
+	 * @param width Widget width, in chars
+	 * @param height Widget height, in chars
+	 */
+	Widget (unsigned int width, unsigned int height) throw (tuirm::Exception);
+
+	/**
+	 * Dtor
+	 *
+	 * Deletes curses window and associated children
+	 */
+	virtual ~Widget ();
+
+	/**
+	 * Add a child Widget
+	 *
+	 * @note This method doesn't check for nullptr, be sure to pass a valid
+	 *  object
+	 */
+	void addChild (Widget *child);
 protected:
 	/**
 	 * Curses window
 	 */
 	WINDOW *win;
 
-	/// Widget's height
-	unsigned int height;
+	/// Children Widgets
+	vector<Widget *> children;
+
 	/// Widget's width
 	unsigned int width;
+	/// Widget's height
+	unsigned int height;
 };
 
 }

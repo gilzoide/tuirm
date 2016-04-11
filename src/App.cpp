@@ -29,10 +29,11 @@ namespace tuirm {
 
 App::App () {
 	logger = new StdLogger ();
+	initCurses ();
 }
 
 
-App::App (int& argc, char **& argv) throw (lap::Exception) {
+App::App (int& argc, char **& argv) throw (tuirm::Exception, lap::Exception) {
 	int wantedVerbosity = 0;
 	// reference to App::logger, for accesing in the lambdas
 	auto & logger = this->logger;
@@ -69,6 +70,8 @@ App::App (int& argc, char **& argv) throw (lap::Exception) {
 
 	// set App Logger verbosity, after it's been decided
 	logger->setVerbosity (wantedVerbosity);
+
+	initCurses ();
 }
 
 
@@ -87,7 +90,6 @@ void App::initCurses () {
 		initCursesColors ();
 	}
 	catch (char const *err) {
-		close ();
 		throw TUIRM_API_EXCEPTION ("App::initCurses", err);
 	}
 }
@@ -111,8 +113,6 @@ void App::run () {
 		throw TUIRM_API_EXCEPTION ("App::run", "Can't run App without Widgets!");
 	}
 	mainLoop = true;
-
-	initCurses ();
 
 	int c = 0;
 	while (mainLoop) {
