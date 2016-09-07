@@ -9,16 +9,16 @@ They run on the tty. Plus, asc art is awesome!
 Thinking about that, I wanted the world to have a full open source toolkit for
 making those apps, and making it easy for programmers (trust me, this is very
 important) to use it any way needed, and abstracting many things a good toolkit
-should, and also use the super cool stuff C++11 gives us.
+should, and also use the super cool style Lua provides.
 
 USING
 =====
-1. Import it: `#include <tuirm.hpp>`
-2. Create the App: `tuirm::App app;`
-3. Insert your app's body/logic: `// hard to make an one-liner here`
-4. Run it: `app.run ()`
-5. End your `main` normally, letting the `tuirm::App`'s destructor do it's thing
-(RAII, dude)
+1. Require it: `local tuirm = require 'tuirm'`
+2. Create the App: `local app = tuirm.App ()`
+3. Insert your app's body/logic: `// hard to make a one-liner here`
+4. Run it: `app:run ()`
+5. End your `main` normally, letting the `tuirm.App`'s destructor do it's thing
+(gc, dude)
 
 CLASSES
 =======
@@ -29,7 +29,7 @@ Class  | What for
 ------ | --------
 App    | The application object. May or may not use multithreads
 Panel  | The panels. Window abstractions, may have child Panels and Widgets. Maybe will be movable, and resize it's children automatically
-Widget | You know that these are for. Various callbacks may be handled, C++11 function style
+Widget | You know that these are for. Various callbacks may be handled, Lua function style
 Input  | The input handler. Read more about it in the next chapter ;]
 Logger | A logger for debug/error info, sending it to a file, ignoring it, or even opening a new panel in app (polymorphism)
 
@@ -51,8 +51,7 @@ process it, so we don't lose responsivity.
 COMMAND LINE ARGUMENTS
 ======================
 Command line arguments are really useful for customization.
-Tuirm will have some common command line arguments for apps, which may be used
-when calling the `App` constructor with `argc` and `argv` as arguments.
+Tuirm will have some common command line arguments for apps.
 Some options:
 - Log output file, or in app alerts
 - Setting app's maximum height and width (instead of initial `LINES` and `COLS`),
@@ -62,7 +61,7 @@ CONFIGURATION
 =============
 App configuration (aside from tuirm's one) is really important, most of the
 time. Maybe there'll be some integration with some data serialization file type
-(probably YAML, or JSON).
+(probably YAML, or JSON), and maybe we'll use Lua itself.
 
 APP CONSTRUCTION
 ================
@@ -71,6 +70,7 @@ complicated and demand hard work.
 Thinking on that, _tuirm_ gives us programmers an easier way: a DOM like
 structure for building widget trees, and with a builder using external files
 (or strings).
-Widgets may have IDs, stored in a `std::map`, so that we can
-query the app for a specific widget. Wigets without IDs won't be in the `map`,
-but will still be tied up in the tree, so it all works fine.
+Widgets may have IDs, stored in a `table`, so that we can
+query the app for a specific widget. Wigets without IDs won't be in the `table`,
+but will still be tied up in the tree, so it all works fine. The ID `table` will
+be a weak table, so everything is cleaned up nicely.

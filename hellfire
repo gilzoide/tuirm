@@ -7,14 +7,11 @@ This package provides shared libraries for tuirm, and will eventually have
 some usage examples. Call with `debug=1` for a debug build.
 
 Targets:
-- `hell docs` will create the Doxygen html and man documentation
 - `hell run` will run the test application
 
 For more information, read the "*.md" files, as they explain plenty stuff.]]
 
 hell.outdir = 'build'
-
-exclusiveTarget ('docs', doxygen {})
 
 libtuirm = feedHellFire 'src/hellfire'
 feedHellFire 'test/hellfire'
