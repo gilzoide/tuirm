@@ -16,14 +16,15 @@
 -- along with Tuirm.  If not, see <http://www.gnu.org/licenses/>.
 --]]
 
---- @module tuirm
--- Base module
+--- @module tuirm.input
+-- Input getter and querry
 
 local M = {}
 
---- App constructor (`tuirm.app.new`)
---
--- @see tuirm.app.new
-M.App = require 'tuirm.app'.new
+local curses = require 'curses'
+
+function M.getInput ()
+	return curses.getch ()
+end
 
 return M
